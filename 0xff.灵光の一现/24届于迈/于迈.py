@@ -14,7 +14,10 @@ class Ball:
         self.ball_color = (100, 100, 100)
         self.ball_x = random.randint(0, 800)
         self.ball_y = 0
-        self.rect = (self.ball_x, self.ball_y, 50, 50)
+        self.rect = (self.ball_x, self.ball_y + 49, 1, 1)
+
+        self.rect_1 = (self.ball_x, self.ball_y, 2, 50)#width = 1
+        self.rect_2 = (self.ball_x + 48, self.ball_y, 2, 50)
         self.y_speed = random.randint(1, 2)
         self.x_speed = (random.randint(-10, 10)) / 10
 
@@ -22,8 +25,8 @@ class Ball:
         pygame.draw.circle(screen, self.ball_color, (self.ball_x, self.ball_y), 50)
 
     def ball_change(self):
-        ball.rect = (ball.ball_x, self.ball_y, 50, 50)
-
+        self.rect = (self.ball_x, self.ball_y + 49, 1, 1)
+        #pygame.Rect(1,1,1,1).
         if self.ball_y >= 650:
             self.ball_x = random.randint(50, 750)
             self.ball_y = 0
@@ -46,18 +49,16 @@ class Rect:
         self.x = 300
         self.y = 550
         self.rect_color = (255, 255, 255)
-        self.rect = (self.x, self.y, self.width, self.height)
-        self.rect_1 = pygame.Rect(self.rect)
+
+        self.rect = pygame.Rect((self.x, self.y, self.width, self.height))
 
     def draw_rect(self):
         screen.fill(bg_color)
         pygame.draw.rect(screen, self.rect_color, self.rect)
 
     def check_mouse_events(self):
-        self.x = pygame.mouse.get_pos()[0]
-        self.x -= self.width / 2
-        self.rect = (self.x, self.y, self.width, self.height)
-        self.rect_1 = pygame.Rect(self.rect)
+        self.rect.centerx = pygame.mouse.get_pos()[0]
+
 
 
 class Board:
@@ -81,8 +82,13 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+        elif event.type == pygame.KEYDOWN:
+            if event.key == 113:
+                pygame.quit()
+                sys.exit()
 
-    if rect.rect_1.colliderect(ball.rect):
+
+    if rect.rect.colliderect(ball.rect):
         ball.stat = 1
         board.real_score += 1
 
@@ -98,6 +104,7 @@ while True:
     ball.ball_change()
     rect.draw_rect()
     rect.check_mouse_events()
+    #rect.x = ball.ball_x
     ball.draw_ball()
     board.draw_board()
     pygame.display.flip()
