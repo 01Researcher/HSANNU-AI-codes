@@ -16,7 +16,7 @@ class Ball:
         self.ball_y = 0
         self.rect = (self.ball_x, self.ball_y + 49, 1, 1)
 
-        self.rect_1 = (self.ball_x, self.ball_y, 2, 50)#width = 1
+        self.rect_1 = (self.ball_x, self.ball_y, 2, 50)
         self.rect_2 = (self.ball_x + 48, self.ball_y, 2, 50)
         self.y_speed = random.randint(1, 2)
         self.x_speed = (random.randint(-10, 10)) / 10
@@ -26,7 +26,6 @@ class Ball:
 
     def ball_change(self):
         self.rect = (self.ball_x, self.ball_y + 49, 1, 1)
-        #pygame.Rect(1,1,1,1).
         if self.ball_y >= 650:
             self.ball_x = random.randint(50, 750)
             self.ball_y = 0
@@ -60,7 +59,6 @@ class Rect:
         self.rect.centerx = pygame.mouse.get_pos()[0]
 
 
-
 class Board:
     def __init__(self):
         self.real_score = 0
@@ -87,7 +85,6 @@ while True:
                 pygame.quit()
                 sys.exit()
 
-
     if rect.rect.colliderect(ball.rect):
         ball.stat = 1
         board.real_score += 1
@@ -104,7 +101,6 @@ while True:
     ball.ball_change()
     rect.draw_rect()
     rect.check_mouse_events()
-    #rect.x = ball.ball_x
     ball.draw_ball()
     board.draw_board()
     pygame.display.flip()
